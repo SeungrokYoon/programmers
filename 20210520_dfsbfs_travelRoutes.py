@@ -1,41 +1,53 @@
-def solution(tickets):
+from collections import deque
+from collections import defaultdict
+
+def solution(tickets): #bfs 를 이용한 해
     answer = []
-    for i in range(len(tickets)):
-        if tickets[i][0] == "ICN":
-            temp = dfs(tickets, i)
-            if temp != []:
-                answer.append(temp)
-    answer.sort(key=lambda u: u[1])
-    print(answer)
-    return answer[0]
+    graph = defaultdict(list)
+    for ticket in range(tickets):
+        graph[ticket[0]] = ticket[1]
+    for t in graph:
+        graph[t] = sorted(graph[t])
+    answer = bfs(graph)
+    return answer
 
 
-def dfs(tickets, root):
-    nodes = ["ICN"]
-    visited = list()
-    stack = list()
-    stack.append([root, tickets[root]])
+def bfs(tickets, root):
+    queue= deque("ICN")
+    routes= []
+
+    while queue:
+
+
+
+    return routes
+
+
+"""
+더 나은 solution 
+"""
+def solution2(tickets):
+    trip_advisor = defaultdict(list)
+
+    for t in tickets:
+        trip_advisor[t[0]].append(t[1])
+    for t in trip_advisor:
+        trip_advisor[t] = sorted(trip_advisor[t])
+
+    departure = 'ICN'
+    stack = [departure]
+    routes = []
 
     while stack:
-        ticket = stack.pop()
-        visited.append(ticket)
-        nodes.append(ticket[1][1])
-        departure = ticket[1][0]
-        new_departure = ticket[1][1]
-        temp = list()
-        for i in range(len(tickets)):
-            if [i, tickets[i]] not in visited and tickets[i][0] == new_departure:
-                temp.append([i, tickets[i]])
-        if temp == []:
-            break
-        temp = sorted(temp, key=lambda u: u[1][1], reverse=True)
-        # 여기서 정렬해주기 알파벳 앞서는게 먼저 pop될 수 있게
-        stack += temp
+        plane = stack[-1]
+        if trip_advisor[plane]:
+            stack.append(trip_advisor[plane].pop(0))
+        else:
+            routes.append(stack.pop())
+    return routes[::-1]
 
-    if len(nodes) == len(tickets) + 1:
-        return nodes
-    return []
 
 if __name__ == '__main__':
-    tickets =[["ICN", "AAA"], ["ICN", "AAA"], ["AAA", "ICN"], ["AAA", "CCC"]]
-    print(solution(tickets))
+    tickets = [["ICN", "AAA"], ["ICN", "AAA"], ["AAA", "ICN"], ["AAA", "CCC"],["CCC","BBB"]]
+    # print(solution(tickets))
+    print(solution2(tickets))
