@@ -8,19 +8,22 @@ def solution(tickets): #bfs 를 이용한 해
         graph[ticket[0]] = ticket[1]
     for t in graph:
         graph[t] = sorted(graph[t])
-    answer = bfs(graph)
-    return answer
 
 
-def bfs(tickets, root):
-    queue= deque("ICN")
-    routes= []
-
+    queue =deque("ICN")
+    routes =[]
     while queue:
+        trip = queue.popleft()
 
 
 
-    return routes
+
+
+
+
+
+
+    return answer
 
 
 """
