@@ -108,16 +108,60 @@ else:
 
 
 
+class Graph:
+    def __init__(self,n_of_vertices):
+        self.n_of_vertices = n_of_vertices
+        self.edges = defaultdict(list)
+    def addEdges(self, u ,v):
+        self.edges[u].append(v)
+
+
+class Subset:
+    def __init__(self, parent, rank):
+        self.parent = parent
+        self.rank = rank
+
+def find(subsets, node):
+    if subsets[node].parent !=node:
+        find(subsets, subsets[node].parent)
+    return subsets[node].parent
+
+
+def union(subsets, u_rep, v_rep):
+    if subsets[u_rep].rank > subsets[v_rep].rank:
+        subsets[v_rep].parent = u_rep
+        subsets[u_rep].rank += 1
+
+    elif subsets[u_rep].rank < subsets[v_rep].rank:
+        subsets[u_rep].parent = v_rep
+        susbsets[v_rep].rank +=1
+    else:
+        subsets[v_rep].parent = u_rep
+        subsets[u_rep].rank +=1
+
+
+def isCyclic(graph):
+    subsets = []
+    # subsets 초기화
+    for i in range(graph.n_of_vertices):
+        subsets.append(Subset(i, 0))
+
+    for u in graph.edges:
+        u_rep = find(subsets, u)
+        for v in graph.edges[u]:
+            v_rep = find(subsets, v)
+            if u_rep != v_rep:
+                union(subsets, u_rep, v_rep)
+            else:
+                print("There is cycle in the graph")
+
+
 
 """
 1. Kruskal's MST Algorithm
 https://www.geeksforgeeks.org/kruskals-minimum-spanning-tree-algorithm-greedy-algo-2/
-
-1. Prim's MST Algorithm
-
-
 """
-
+class 
 
 
 
