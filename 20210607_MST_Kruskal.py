@@ -89,3 +89,71 @@ g.addEdge(7,6,1)
 g.KruskalMST()
 
 
+class Graph2:
+    def __init__(self,n):
+        self.n = n
+        self.graph = []
+
+
+    def addEdge(self,u,v,w):
+        self.graph.append([u,v,w])
+
+    def union(self,parents,ranks,u,v):
+        if ranks[u]> ranks[v]:
+            parents[v] = u
+        elif ranks[u]<ranks[v]:
+            parents[u] = v
+        else:
+            parents[v]=u
+            ranks[u] +=1
+
+
+    def find(self,parents,node):
+        if parents[node]!=node:
+            parents[node] = self.find(parents, parents[node])
+        return parents[node]
+
+    def KruskalMST(self):
+        #weight에 따라 edges 를 정렬하기
+        self.graph = sorted(self.graph, key = lambda x: x[2])
+        parents= [0]*self.n #부모
+        ranks= [0]*self.n #ranks
+        answer= []
+        totalWeight = 0
+        for i in range(self.n):
+            parents[i]=i
+
+        pointer = 0 #smallest pointer
+        counter= 0 #edge counter
+        while counter < self.n-1:
+            u,v,w= self.graph[pointer] #현재 smallest
+            u_root = self.find(parents,u)
+            v_root = self.find(parents,v)
+            pointer += 1
+
+            if u_root  != v_root :
+                answer.append([u,v,w])
+                print(u , " -- ",v, " == ", w)
+                self.union(parents, ranks,u_root, v_root)
+                totalWeight+=w
+                counter+=1
+        print("graph 2's MST =", totalWeight)
+
+
+g2 = Graph2(9)
+g2.addEdge(3,5,14)
+g2.addEdge(1,7,11)
+g2.addEdge(5,4,10)
+g2.addEdge(3,4,9)
+g2.addEdge(1,2,8)
+g2.addEdge(0,7,8)
+g2.addEdge(7,8,7)
+g2.addEdge(2,3,7)
+g2.addEdge(8,6,6)
+g2.addEdge(2,5,4)
+g2.addEdge(0,1,4)
+g2.addEdge(6,5,2)
+g2.addEdge(8,2,2)
+g2.addEdge(7,6,1)
+g2.KruskalMST()
+
