@@ -1,8 +1,10 @@
+
+
 """
 MST(Minimum Spanning Tree) 최소 신장트리 알고리즘 알아보기
 """
 
-"""
+""" 
 Union find 부터 알고 와야 한다. cycle 이 있는지 없는지 확인해야 하기 때문
 
 https://www.geeksforgeeks.org/union-find/
@@ -134,7 +136,7 @@ def union(subsets, u_rep, v_rep):
 
     elif subsets[u_rep].rank < subsets[v_rep].rank:
         subsets[u_rep].parent = v_rep
-        susbsets[v_rep].rank +=1
+        subsets[v_rep].rank +=1
     else:
         subsets[v_rep].parent = u_rep
         subsets[u_rep].rank +=1
@@ -173,7 +175,7 @@ https://practice.geeksforgeeks.org/problems/minimum-spanning-tree/1
 궁금증: 그렇다면 Prim's Algorithm 에서는 사이클 판별을 어떻게 하는 것일까? 자동으로 사이클이 판별이 되나?
 궁금증2: 시간 복잡도는 adj matrix - O(V^^2), adj list - O(E*LogV)
 """
-#Prim's algorithm with adj matrix
+#Prim's algorithm with adj matrix + without Binary Heap
 import sys
 import math
 
@@ -191,7 +193,7 @@ class Graph3:
     def minKey(self, key, mstSet):
         min= math.inf
         for c in range(self.V):
-            if key[c] <min and mstSet[c] ==False:
+            if key[c] < min and mstSet[c] ==False:
                 min = key[c]
                 min_index = c
         return min_index
@@ -219,7 +221,7 @@ g3.graph = [[0,2,0,6,0],
            [6,8,0,0,9],
            [0,5,7,9,0]]
 g3.primMST();
-#Prim's algorithm with adj list + full implementation of heap
+#Prim's algorithm with adj list + Binary Heap
 from collections import defaultdict
 import sys
 class Heap:
