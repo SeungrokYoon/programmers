@@ -1,8 +1,10 @@
+
+
 """
 MST(Minimum Spanning Tree) 최소 신장트리 알고리즘 알아보기
 """
 
-"""
+""" 
 Union find 부터 알고 와야 한다. cycle 이 있는지 없는지 확인해야 하기 때문
 
 https://www.geeksforgeeks.org/union-find/
@@ -134,7 +136,7 @@ def union(subsets, u_rep, v_rep):
 
     elif subsets[u_rep].rank < subsets[v_rep].rank:
         subsets[u_rep].parent = v_rep
-        susbsets[v_rep].rank +=1
+        subsets[v_rep].rank +=1
     else:
         subsets[v_rep].parent = u_rep
         subsets[u_rep].rank +=1
@@ -173,9 +175,53 @@ https://practice.geeksforgeeks.org/problems/minimum-spanning-tree/1
 궁금증: 그렇다면 Prim's Algorithm 에서는 사이클 판별을 어떻게 하는 것일까? 자동으로 사이클이 판별이 되나?
 궁금증2: 시간 복잡도는 adj matrix - O(V^^2), adj list - O(E*LogV)
 """
-#Prim's algorithm with adj matrix
+#Prim's algorithm with adj matrix + without Binary Heap
+import sys
+import math
 
-#Prim's algorithm with adj list + full implementation of heap
+class Graph3:
+    def __init__(self, vertices):
+        self.V = vertices
+        self.graph = [[0 for column in range(vertices)]
+                      for row in range(vertices)]
+
+    def printMST(self,parent):
+        print("Edge-Weight")
+        for i in range(1, self.V):
+            print(parent[i], i,self.graph[i][parent[i]] )
+
+    def minKey(self, key, mstSet):
+        min= math.inf
+        for c in range(self.V):
+            if key[c] < min and mstSet[c] ==False:
+                min = key[c]
+                min_index = c
+        return min_index
+
+    def primMST(self):
+        #key values used to pick minimum weight edge in cut
+        key = [math.inf]*self.V
+        parent = [None]*self.V
+        #Make key 0 so that this vertex is picked as first vertex
+        key[0] = 0
+        mstSet=[False]*self.V
+        for cout in range(self.V):
+            u=self.minKey(key, mstSet)
+            mstSet[u] =True
+            for v in range(self.V):
+                if self.graph[u][v] >0 and mstSet[v] ==False and key[v] >self.graph[u][v]:
+                    key[v] =self.graph[u][v]
+                    parent[v]=u
+        self.printMST(parent)
+
+g3= Graph3(5)
+g3.graph = [[0,2,0,6,0],
+           [2,0,3,8,5],
+           [0,3,0,0,7],
+           [6,8,0,0,9],
+           [0,5,7,9,0]]
+g3.primMST();
+#Prim's algorithm with adj list + Binary Heap
 from collections import defaultdict
 import sys
 class Heap:
