@@ -21,6 +21,7 @@ class Graph:
         visited=set()
         visited.add(1)
         heap =[ _ for _ in self.adj_list[1]]
+        #지금 힙에 있는 것들은 아직 방몬이 되지 않았던 정점들이기 때문에, 안됨.
         heapq.heapify(heap)
         while heap and len(visited)!= (self.V):
             dist, neighbor= heapq.heappop(heap)
