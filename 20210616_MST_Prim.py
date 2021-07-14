@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #Prim's MST
 
 import sys

@@ -182,12 +182,14 @@ import math
 class Graph3:
     def __init__(self, vertices):
         self.V = vertices
+        #Adjacency Matrix = [i]->[j]의 weight를 저장하는 인접 행렬
         self.graph = [[0 for column in range(vertices)]
                       for row in range(vertices)]
 
     def printMST(self,parent):
         print("Edge-Weight")
         for i in range(1, self.V):
+            #to, from , weight 
             print(parent[i], i,self.graph[i][parent[i]] )
 
     def minKey(self, key, mstSet):
@@ -196,6 +198,7 @@ class Graph3:
             if key[c] < min and mstSet[c] ==False:
                 min = key[c]
                 min_index = c
+        #key 값이 min 보다 작고, 즉 새로 들어오고, mstSet에 아직 들어오지 않은 vertex를 리턴
         return min_index
 
     def primMST(self):
