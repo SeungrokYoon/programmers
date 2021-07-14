@@ -65,8 +65,3 @@ def solution(n, results):
             answer += 1
 
     return answer
-"""
-틀렸다! 왜 틀렸을까.....고민을 해보자......
-"""
-
-
